@@ -1,0 +1,16 @@
+{
+  "extends": "../../packages/config/tsconfig.base.json",
+  "compilerOptions": {
+    "lib": ["ES2021"],
+    "types": ["node"],
+
+    /* API server emits JS, so noEmit: false */
+    "noEmit": false,
+    "outDir": "dist",
+
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext"
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}

@@ -1,0 +1,27 @@
+{
+  "name": "subscription-billing-manager",
+  "private": true,
+  "version": "0.0.1",
+  "packageManager": "pnpm@10.20.0",
+  "engines": {
+    "node": ">=24.0.0 <25.0.0"
+  },
+  "scripts": {
+    "dev": "turbo run dev --parallel",
+    "dev:web": "turbo run dev --filter=web",
+    "dev:admin": "turbo run dev --filter=admin",
+    "dev:api": "turbo run dev --filter=api",
+    "build": "turbo run build",
+    "build:web": "turbo run build --filter=web",
+    "build:admin": "turbo run build --filter=admin",
+    "build:api": "turbo run build --filter=api",
+    "lint": "turbo run lint",
+    "test": "turbo run test"
+  },
+  "author": "Hasan Hüseyin Uğur <hasanugurdev@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "turbo": "^2.6.1",
+    "typescript": "^5.6.0"
+  }
+}
