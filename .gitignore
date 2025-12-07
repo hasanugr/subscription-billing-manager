@@ -39,3 +39,10 @@ yarn-error.log*
 .vscode/
 .idea/
 *.log
+
+# Database
+*.sql
+migrations/
+*.db
+*.sqlite
+*.sqlite3

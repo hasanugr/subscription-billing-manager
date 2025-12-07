@@ -1,0 +1,15 @@
+{
+  "name": "api",
+  "private": true,
+  "scripts": {
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.25",
+    "prisma": "^7.1.0"
+  },
+  "dependencies": {
+    "@prisma/client": "^7.1.0"
+  }
+}
