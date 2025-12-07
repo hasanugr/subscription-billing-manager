@@ -1,0 +1,144 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─────────────────────────────
+// ENUMS
+// ─────────────────────────────
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum CategoryType {
+  INCOME
+  EXPENSE
+  SUBSCRIPTION
+}
+
+enum Currency {
+  TRY
+  USD
+  EUR
+  GBP
+  OTHER
+}
+
+enum SubscriptionPeriod {
+  MONTHLY
+  YEARLY
+}
+
+// ─────────────────────────────
+// MODELS
+// ─────────────────────────────
+
+model User {
+  id           String    @id @default(uuid()) @db.Uuid
+  email        String    @unique
+  passwordHash String
+
+  role         Role      @default(USER)
+  baseCurrency Currency  @default(TRY)
+
+  // Relations
+  subscriptions Subscription[]
+  expenses      Expense[]
+  incomes       Income[]
+  categories    Category[]   // categories belonging to the user (those with a non-null userId)
+
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Category {
+  id        String        @id @default(uuid()) @db.Uuid
+  name      String
+  type      CategoryType
+
+  // If NULL: global category
+  // If not NULL: user-specific category
+  userId    String?       @db.Uuid
+  user      User?         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Relations
+  subscriptions Subscription[]
+  expenses      Expense[]
+  incomes       Income[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([type])
+
+  // Ensure unique category names per user and type
+  @@unique([userId, name, type])
+}
+
+model Subscription {
+  id         String            @id @default(uuid()) @db.Uuid
+  userId     String            @db.Uuid
+  categoryId String            @db.Uuid
+
+  user       User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category   Category          @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+
+  amount     Decimal           @db.Decimal(10, 2)
+  currency   Currency
+  period     SubscriptionPeriod
+  startDate  DateTime
+  isActive   Boolean           @default(true)
+
+  createdAt  DateTime          @default(now())
+  updatedAt  DateTime          @updatedAt
+
+  @@index([userId, isActive])
+  @@index([categoryId])
+}
+
+model Expense {
+  id         String    @id @default(uuid()) @db.Uuid
+  userId     String    @db.Uuid
+  categoryId String    @db.Uuid
+
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category   Category  @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+
+  amount     Decimal   @db.Decimal(10, 2)
+  currency   Currency
+  date       DateTime
+  note       String?
+
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@index([userId, date])
+  @@index([categoryId])
+}
+
+model Income {
+  id         String    @id @default(uuid()) @db.Uuid
+  userId     String    @db.Uuid
+  categoryId String    @db.Uuid
+
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category   Category  @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+
+  amount     Decimal   @db.Decimal(10, 2)
+  currency   Currency
+  date       DateTime
+  note       String?
+
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@index([userId, date])
+  @@index([categoryId])
+}
