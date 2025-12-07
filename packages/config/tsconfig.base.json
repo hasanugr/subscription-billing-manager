@@ -25,19 +25,6 @@
     "skipLibCheck": true,
 
     /* TS EMIT (FE & SHARED) */
-    "noEmit": true,
-
-    /* PATH ALIASES → shared by all apps */
-    "baseUrl": "../..",
-    "paths": {
-      "@sbm/ui": ["packages/ui/src"],
-      "@sbm/ui/*": ["packages/ui/src/*"],
-
-      "@sbm/shared": ["packages/shared/src"],
-      "@sbm/shared/*": ["packages/shared/src/*"],
-
-      "@sbm/config": ["packages/config"],
-      "@sbm/config/*": ["packages/config/*"]
-    }
+    "noEmit": true
   }
 }
