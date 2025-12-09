@@ -10,9 +10,9 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.11.1",
-    "next": "16.0.5",
-    "react": "19.2.0",
-    "react-dom": "19.2.0",
+    "next": "16.0.8",
+    "react": "19.2.1",
+    "react-dom": "19.2.1",
     "react-redux": "^9.2.0"
   },
   "devDependencies": {
@@ -23,7 +23,7 @@
     "@types/react-redux": "^7.1.34",
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^9",
-    "eslint-config-next": "16.0.5",
+    "eslint-config-next": "16.0.8",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

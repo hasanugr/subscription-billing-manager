@@ -18,7 +18,6 @@ enum Role {
 enum CategoryType {
   INCOME
   EXPENSE
-  SUBSCRIPTION
 }
 
 enum Currency {
@@ -29,7 +28,9 @@ enum Currency {
   OTHER
 }
 
-enum SubscriptionPeriod {
+enum RecurrencePeriod {
+  NONE
+  WEEKLY
   MONTHLY
   YEARLY
 }
@@ -39,104 +40,94 @@ enum SubscriptionPeriod {
 // ─────────────────────────────
 
 model User {
-  id           String @id @default(uuid()) @db.Uuid
+  id           String @id @default(uuid())
   email        String @unique
   passwordHash String
+  role         Role   @default(USER)
+  baseCurrency String @default("TRY")
 
-  role         Role     @default(USER)
-  baseCurrency Currency @default(TRY)
-
-  // Relations
-  subscriptions Subscription[]
-  expenses      Expense[]
-  incomes       Income[]
-  categories    Category[] // categories belonging to the user (those with a non-null userId)
+  categories Category[]
+  expenses   Expense[]
+  incomes    Income[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Category {
-  id   String       @id @default(uuid()) @db.Uuid
-  name String
-  type CategoryType
+  id       String       @id @default(uuid())
+  name     String
+  type     CategoryType
+  isGlobal Boolean      @default(false)
 
-  // If NULL: global category
-  // If not NULL: user-specific category
-  userId String? @db.Uuid
-  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id])
 
-  // Relations
-  subscriptions Subscription[]
-  expenses      Expense[]
-  incomes       Income[]
+  expenses Expense[]
+  incomes  Income[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  // Ensure unique category names per user and type
-  @@unique([userId, name, type])
   @@index([userId])
   @@index([type])
 }
 
-model Subscription {
-  id         String @id @default(uuid()) @db.Uuid
-  userId     String @db.Uuid
-  categoryId String @db.Uuid
-
-  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  category Category @relation(fields: [categoryId], references: [id], onDelete: Restrict)
-
-  amount    Decimal            @db.Decimal(10, 2)
-  currency  Currency
-  period    SubscriptionPeriod
-  startDate DateTime
-  isActive  Boolean            @default(true)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([userId, isActive])
-  @@index([categoryId])
-}
-
 model Expense {
-  id         String @id @default(uuid()) @db.Uuid
-  userId     String @db.Uuid
-  categoryId String @db.Uuid
+  id     String @id @default(uuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
 
-  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  category Category @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
 
-  amount   Decimal  @db.Decimal(10, 2)
-  currency Currency
+  amount   Decimal
+  currency String
   date     DateTime
-  note     String?
+
+  // 💫 Recurrence fields
+  recurrencePeriod RecurrencePeriod @default(NONE)
+  recurrenceStart  DateTime?
+  recurrenceEnd    DateTime?
+
+  // 💿 Subscription flag (Netflix etc.)
+  isSubscription Boolean @default(false)
+
+  note String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([userId, date])
+  @@index([userId])
   @@index([categoryId])
+  @@index([date])
+  @@index([recurrencePeriod])
 }
 
 model Income {
-  id         String @id @default(uuid()) @db.Uuid
-  userId     String @db.Uuid
-  categoryId String @db.Uuid
+  id     String @id @default(uuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
 
-  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  category Category @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
 
-  amount   Decimal  @db.Decimal(10, 2)
-  currency Currency
+  amount   Decimal
+  currency String
   date     DateTime
-  note     String?
+
+  // 💫 Recurrence fields 
+  recurrencePeriod RecurrencePeriod @default(NONE)
+  recurrenceStart  DateTime?
+  recurrenceEnd    DateTime?
+
+  note String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([userId, date])
+  @@index([userId])
   @@index([categoryId])
+  @@index([date])
+  @@index([recurrencePeriod])
 }
