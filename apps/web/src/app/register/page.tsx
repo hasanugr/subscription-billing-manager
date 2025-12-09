@@ -27,6 +27,7 @@ export default function RegisterPage() {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const apiError = (error as any)?.data?.error?.message ?? null;
 
   return (
