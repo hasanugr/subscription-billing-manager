@@ -84,6 +84,11 @@ export async function loginHandler(req: AuthRequest, res: Response) {
   }
 }
 
+export async function logoutHandler(_req: AuthRequest, res: Response) {
+  res.clearCookie("accessToken", { path: "/" });
+  return res.json({ message: "Logged out successfully" });
+}
+
 export async function meHandler(req: AuthRequest, res: Response) {
   if (!req.user) {
     return res.status(401).json({
