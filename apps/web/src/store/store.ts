@@ -1,13 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { api } from "./api";
+import { baseApi } from "@sbm/api-client";
 
-export const store = configureStore({
+export const webStore = configureStore({
   reducer: {
-    [api.reducerPath]: api.reducer,
+    [baseApi.reducerPath]: baseApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(api.middleware),
+    getDefaultMiddleware().concat(baseApi.middleware),
 });
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+export type WebRootState = ReturnType<typeof webStore.getState>;
+export type WebAppDispatch = typeof webStore.dispatch;

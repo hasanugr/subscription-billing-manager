@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, FormEvent } from "react";
-import { useLoginMutation } from "@/store/authApi";
+import { useLoginMutation } from "@sbm/api-client";
 import { useRouter } from "next/navigation";
 import { defaultLocale } from "@/i18n/config";
 import { getAuthMessages } from "@/i18n/auth";
@@ -19,7 +19,7 @@ export default function LoginPage() {
     e.preventDefault();
     try {
       const res = await login({ email, password }).unwrap();
-      if (res.data) {
+      if (res) {
         router.push("/");
       }
     } catch (err) {

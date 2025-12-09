@@ -11,6 +11,17 @@ export const generalMessages: Record<
     role: string;
     baseCurrency: string;
     logoutButton: string;
+
+    // Temporally added for completeness
+    categoriesButton: string;
+    expense: string;
+    income: string;
+    categoriesTitle?: string;
+    categoriesLoading?: string;
+    categoriesError?: string;
+    categoryName?: string;
+    categoryAddButton?: string;
+    categoryAddButtonLoading?: string;
   }
 > = {
   tr: {
@@ -23,6 +34,17 @@ export const generalMessages: Record<
     role: "Rol",
     baseCurrency: "Temel para birimi",
     logoutButton: "Çıkış Yap",
+
+    // Temporally added for completeness
+    categoriesButton: "Kategoriler",
+    expense: "Gider",
+    income: "Gelir",
+    categoriesTitle: "Kategoriler",
+    categoriesLoading: "Kategoriler yükleniyor...",
+    categoriesError: "Kategoriler yüklenirken hata oluştu.",
+    categoryName: "Kategori Adı",
+    categoryAddButton: "Kategori Ekle",
+    categoryAddButtonLoading: "Ekleniyor...",
   },
   en: {
     title: "Subscription & Billing Manager",
@@ -34,6 +56,17 @@ export const generalMessages: Record<
     role: "Role",
     baseCurrency: "Base currency",
     logoutButton: "Logout",
+
+    // Temporally added for completeness
+    categoriesButton: "Categories",
+    expense: "Expense",
+    income: "Income",
+    categoriesTitle: "Categories",
+    categoriesLoading: "Loading categories...",
+    categoriesError: "Error loading categories.",
+    categoryName: "Category Name",
+    categoryAddButton: "Add Category",
+    categoryAddButtonLoading: "Adding...",
   },
 };
 

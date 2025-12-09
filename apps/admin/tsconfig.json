@@ -28,7 +28,10 @@
       "@sbm/shared/*": ["../../packages/shared/src/*"],
 
       "@sbm/config": ["../../packages/config"],
-      "@sbm/config/*": ["../../packages/config/*"]
+      "@sbm/config/*": ["../../packages/config/*"],
+
+      "@sbm/api-client": ["../../packages/api-client/src"],
+      "@sbm/api-client/*": ["../../packages/api-client/src/*"]
     }
   },
   "include": [

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, FormEvent } from "react";
-import { useRegisterMutation } from "@/store/authApi";
+import { useRegisterMutation } from "@sbm/api-client";
 import { useRouter } from "next/navigation";
 import { defaultLocale } from "@/i18n/config";
 import { getAuthMessages } from "@/i18n/auth";
@@ -19,7 +19,7 @@ export default function RegisterPage() {
     e.preventDefault();
     try {
       const res = await register({ email, password }).unwrap();
-      if (res.data) {
+      if (res) {
         router.push("/login");
       }
     } catch (err) {

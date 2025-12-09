@@ -1,6 +1,6 @@
 "use client";
 
-import { useMeQuery, useLogoutMutation } from "@/store/authApi";
+import { useMeQuery, useLogoutMutation } from "@sbm/api-client";
 import { useRouter } from "next/navigation";
 import { defaultLocale } from "@/i18n/config";
 import { getGeneralMessages } from "@/i18n/general";
@@ -9,7 +9,7 @@ export default function HomePage() {
   const router = useRouter();
   const { data, isLoading } = useMeQuery();
 
-  const user = data?.data ?? null;
+  const user = data ?? null;
 
   const [logout] = useLogoutMutation();
 
@@ -57,6 +57,13 @@ export default function HomePage() {
             className="rounded bg-red-500 px-4 py-2 text-white cursor-pointer hover:bg-red-600"
           >
             {t.logoutButton}
+          </button>
+
+          <button
+            onClick={() => router.push("/categories")}
+            className="ml-2 rounded bg-blue-500 px-4 py-2 text-white cursor-pointer hover:bg-blue-600"
+          >
+            {t.categoriesButton}
           </button>
         </div>
       )}
