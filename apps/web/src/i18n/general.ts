@@ -14,6 +14,7 @@ export const generalMessages: Record<
 
     // Temporally added for completeness
     categoriesButton: string;
+    expensesButton: string;
     expense: string;
     income: string;
     categoriesTitle?: string;
@@ -37,6 +38,7 @@ export const generalMessages: Record<
 
     // Temporally added for completeness
     categoriesButton: "Kategoriler",
+    expensesButton: "Giderler",
     expense: "Gider",
     income: "Gelir",
     categoriesTitle: "Kategoriler",
@@ -59,6 +61,7 @@ export const generalMessages: Record<
 
     // Temporally added for completeness
     categoriesButton: "Categories",
+    expensesButton: "Expenses",
     expense: "Expense",
     income: "Income",
     categoriesTitle: "Categories",
